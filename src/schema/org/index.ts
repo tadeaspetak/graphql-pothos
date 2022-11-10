@@ -1,10 +1,10 @@
-import { OrgModel } from "../../models";
+import { IOrg } from "../types";
 import { orgs } from "../../data";
 import { builder } from "../../builder";
 
 import { OrgMetrics } from "./metrics";
 
-export const Org = builder.objectRef<OrgModel>("Org").implement({
+export const Org = builder.objectRef<IOrg>("Org").implement({
   fields: (t) => ({
     id: t.exposeID("id"), // nothing is exposed by default
     name: t.exposeString("name"),
@@ -15,13 +15,3 @@ export const Org = builder.objectRef<OrgModel>("Org").implement({
     }),
   }),
 });
-
-// co-locate queries
-builder.queryField("org", (t) =>
-  t.field({
-    type: Org,
-    nullable: true, // fields are required by default
-    args: { id: t.arg.id({ required: true }) }, // args are optional by default
-    resolve: (_, { id }) => orgs.find((o) => o.id === id),
-  })
-);

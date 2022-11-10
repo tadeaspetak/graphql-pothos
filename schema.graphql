@@ -1,3 +1,7 @@
+interface Node {
+  globalId: ID!
+}
+
 type Org {
   computed: String!
   id: ID!
@@ -25,13 +29,34 @@ type OrgMetricsSignupsResult {
   status: OrgMetricsSignupStatus!
 }
 
-type Query {
-  org(id: ID!): Org
-  user(id: ID!): User
+type PageInfo {
+  endCursor: String
+  hasNextPage: Boolean!
+  hasPreviousPage: Boolean!
+  startCursor: String
 }
 
-type User {
+type Query {
+  node(id: ID!): Node
+  nodes(ids: [ID!]!): [Node]!
+  org(id: ID!): Org
+  user(id: ID!): User
+  users(after: String, before: String, first: Int, last: Int): QueryUsersConnection!
+}
+
+type QueryUsersConnection {
+  edges: [QueryUsersConnectionEdge]!
+  pageInfo: PageInfo!
+}
+
+type QueryUsersConnectionEdge {
+  cursor: String!
+  node: User!
+}
+
+type User implements Node {
   computed: String!
+  globalId: ID!
   id: ID!
   name: String!
   org: Org!

@@ -1,11 +1,19 @@
-import { OrgModel, OrgMetricsSignupStatus, UserModel } from "./models";
+import { IOrg, OrgMetricsSignupStatus, IUser } from "./schema/types";
 
-export const users: UserModel[] = [
+export const users: IUser[] = [
   { id: "1", name: "first user name", orgId: "1" },
   { id: "2", name: "second user name", orgId: "2" },
+  { id: "3", name: "third user name", orgId: "2" },
+  { id: "4", name: "fourth user name", orgId: "2" },
+  { id: "5", name: "fifth user name", orgId: "2" },
+  { id: "6", name: "sixth user name", orgId: "2" },
+  { id: "7", name: "seventh user name", orgId: "2" },
 ];
+for (let i = 10; i < 100; i++) {
+  users.push({ id: `${i}`, name: `${i}-th user name`, orgId: "1" });
+}
 
-export const orgs: OrgModel[] = [
+export const orgs: IOrg[] = [
   { id: "1", name: "first org name" },
   { id: "2", name: "second org name" },
 ];

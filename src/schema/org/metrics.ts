@@ -1,4 +1,4 @@
-import { OrgMetricsSignupStatus } from "../../models";
+import { OrgMetricsSignupStatus } from "../types";
 import { impacts, signups } from "../../data";
 import { builder } from "../../builder";
 

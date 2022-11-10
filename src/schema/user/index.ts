@@ -1,12 +1,14 @@
-import { UserModel } from "../../models";
+import { IUser } from "../types";
 import { orgs, users } from "../../data";
 import { builder } from "../../builder";
 
 import { Org } from "../org";
 
-export const User = builder.objectRef<UserModel>("User").implement({
+export const User = builder.node(builder.objectRef<IUser>("User"), {
+  id: { resolve: (u) => u.id }, // will be called `globalID` as described in the config of the plugin
+  loadMany: (ids) => ids.map((id) => users.find((u) => u.id === id)), // automatically cached; we probably don't need this because we have loaders
   fields: (t) => ({
-    id: t.exposeID("id"),
+    id: t.exposeID("id"), // internal id
     name: t.exposeString("name"),
     computed: t.string({ resolve: (u) => `computed user: ${u.name}` }),
     org: t.field({
@@ -15,13 +17,3 @@ export const User = builder.objectRef<UserModel>("User").implement({
     }),
   }),
 });
-
-// co-locate queries
-builder.queryField("user", (t) =>
-  t.field({
-    type: User,
-    nullable: true,
-    args: { id: t.arg.id({ required: true }) },
-    resolve: (_, { id }) => users.find((u) => u.id === id),
-  })
-);
