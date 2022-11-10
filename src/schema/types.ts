@@ -1,15 +1,3 @@
-export interface PageCursor {
-  cursor: string;
-  pageNumber: number;
-  isCurrent: boolean;
-}
-
-export interface PageCursors {
-  first: PageCursor;
-  around: PageCursor[];
-  last: PageCursor;
-}
-
 export enum OrgMetricsSignupStatus {
   pending = "pending",
   accepted = "accepted",
