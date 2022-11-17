@@ -6,7 +6,6 @@ import { schema } from "./schema";
 
 const server = new ApolloServer({
   context: async ({ req }) => {
-    console.log(req.headers.authorization);
     return {
       isLoggedIn: !!req.headers.authorization,
     };
